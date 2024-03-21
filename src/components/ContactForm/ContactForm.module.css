@@ -27,6 +27,10 @@
   border: 0.5px solid cadetblue;
 }
 
+.formInputError {
+  border-color: red;
+}
+
 .errorMessage {
   position: absolute;
   left: 0;

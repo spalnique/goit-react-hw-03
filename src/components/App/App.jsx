@@ -19,18 +19,16 @@ export default function App() {
   const [allContacts, setContacts] = useState(initialContacts);
   const [filterInput, setFilterInput] = useState('');
 
-  const handleSubmit = (values, actions) => {
-    setContacts(prevContacts => {
-      return [...prevContacts, { id: nanoid(), ...values }];
-    });
-    actions.resetForm();
-  };
-
   const handleDelete = id => {
     setContacts(prevContacts => {
       return prevContacts.filter(contact => contact.id !== id);
     });
   };
+
+  const handleAdd = values =>
+    setContacts(prevContacts => {
+      return [...prevContacts, { id: nanoid(), ...values }];
+    });
 
   const filteredContacts = allContacts.filter(contact =>
     contact.username.toLowerCase().includes(filterInput.toLowerCase())
@@ -43,9 +41,9 @@ export default function App() {
   return (
     <div className={css.mainContainer}>
       <h2>Phonebook</h2>
-      <ContactForm initialValues={initialValues} onSubmit={handleSubmit} />
+      <ContactForm initialValues={initialValues} onContactAdd={handleAdd} />
       <SearchBox value={filterInput} onFilter={setFilterInput} />
-      <ContactList contacts={filteredContacts} onDelete={handleDelete} />
+      <ContactList contacts={filteredContacts} onContactDelete={handleDelete} />
     </div>
   );
 }
