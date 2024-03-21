@@ -1,45 +1,59 @@
 import { useId } from 'react';
-import { Formik, Form, Field } from 'formik';
-
-// import { Formik, Form, Field, ErrorMessage } from 'formik';
-// import * as Yup from 'yup';
-
-// const FeedbackSchema = Yup.object().shape({
-//   username: Yup.string()
-//     .min(2, 'Username is too short!')
-//     .max(50, 'Username is too long!')
-//     .required('Required'),
-//   email: Yup.string().email('Must be a valid email!').required('Required'),
-//   message: Yup.string()
-//     .min(3, 'Message is too short!')
-//     .max(256, 'Message is too long!')
-//     .required('Required'),
-//   level: Yup.string()
-//     .oneOf(Object.values(possibleFeedbacks))
-//     .required('Required'),
-// });
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+import css from '../ContactForm/ContactForm.module.css';
 
 export default function ContactForm({ initialValues, onSubmit }) {
+  const FeedbackSchema = Yup.object().shape({
+    username: Yup.string()
+      .min(3, 'Username is too short!')
+      .max(50, 'Username is too long!')
+      .required('Required'),
+    phone: Yup.string()
+      .min(3, 'Phone number is too short!')
+      .max(50, 'Phone number is too long!')
+      .required('Required'),
+  });
   const usernameFieldId = useId();
   const phoneFieldId = useId();
 
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      <Form>
-        <div>
-          <label htmlFor={usernameFieldId}>Username</label>
-          <Field type="text" name="username" id={usernameFieldId} />
-          {/* <ErrorMessage name="username" as="span" /> */}
+    <Formik
+      initialValues={initialValues}
+      validationSchema={FeedbackSchema}
+      onSubmit={onSubmit}>
+      <Form className={css.formContainer}>
+        <div className={css.fieldContainer}>
+          <label className={css.labelText} htmlFor={usernameFieldId}>
+            Username
+          </label>
+          <Field
+            type="text"
+            name="username"
+            id={usernameFieldId}
+            className={css.formInput}
+          />
+          <ErrorMessage
+            name="username"
+            component="p"
+            className={css.errorMessage}
+          />
         </div>
-        <div>
-          <label htmlFor={phoneFieldId}>Phone</label>
+        <div className={css.fieldContainer}>
+          <label className={css.labelText} htmlFor={phoneFieldId}>
+            Phone
+          </label>
           <Field
             type="tel"
             name="phone"
             id={phoneFieldId}
-            required
+            className={css.formInput}
           />
-          {/* <ErrorMessage name="phone" as="span" /> */}
+          <ErrorMessage
+            name="phone"
+            component="p"
+            className={css.errorMessage}
+          />
         </div>
         <button type="submit">Add contact</button>
       </Form>

@@ -3,6 +3,7 @@ import SearchBox from '../SearchBox/SearchBox';
 import ContactList from '../ContactList/ContactList';
 import { useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
+import css from '../App/App.module.css';
 
 export default function App() {
   const checkStorage = JSON.parse(localStorage.getItem('contact-list'));
@@ -40,11 +41,11 @@ export default function App() {
   }, [allContacts]);
 
   return (
-    <>
+    <div className={css.mainContainer}>
       <h2>Phonebook</h2>
       <ContactForm initialValues={initialValues} onSubmit={handleSubmit} />
       <SearchBox value={filterInput} onFilter={setFilterInput} />
       <ContactList contacts={filteredContacts} onDelete={handleDelete} />
-    </>
+    </div>
   );
 }
