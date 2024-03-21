@@ -6,17 +6,18 @@ import { nanoid } from 'nanoid';
 import css from '../App/App.module.css';
 
 export default function App() {
-  const checkStorage = JSON.parse(localStorage.getItem('contact-list'));
-  const initialContacts = checkStorage
-    ? JSON.parse(localStorage.getItem('contact-list'))
-    : [];
+  const getContacts = () => {
+    return JSON.parse(localStorage.getItem('contact-list'))
+      ? JSON.parse(localStorage.getItem('contact-list'))
+      : [];
+  };
 
   const initialValues = {
     username: '',
     phone: '',
   };
 
-  const [allContacts, setContacts] = useState(initialContacts);
+  const [allContacts, setContacts] = useState(getContacts);
   const [filterInput, setFilterInput] = useState('');
 
   const handleDelete = id => {
