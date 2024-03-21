@@ -13,4 +13,5 @@
   flex-direction: column;
   gap: 10px;
   font-size: 14px;
+  text-transform: capitalize;
 }
